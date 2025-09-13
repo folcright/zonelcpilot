@@ -1,8 +1,8 @@
-# Loudoun County Zoning Assistant
+# Loudoun County Planning Staff Assistant (B2G)
 
 ## Overview
 
-This is an AI-powered Q&A system for zoning ordinances, specifically designed for Loudoun County. The application allows users to ask natural language questions about zoning codes and receives intelligent answers backed by semantic search through the actual ordinance documents. The system uses vector embeddings to find relevant sections of zoning documents and leverages OpenAI's GPT models to provide contextual answers with proper citations.
+This is a professional B2G (Business-to-Government) tool designed specifically for Loudoun County planning staff. The application provides an AI-powered assistant for querying zoning ordinances with parcel awareness, audit logging, and professional government interfaces. The system uses vector embeddings to search through the 548 sections of the current Loudoun County Zoning Ordinance and leverages OpenAI's GPT models to provide contextual answers with proper citations and compliance tracking.
 
 ## User Preferences
 
