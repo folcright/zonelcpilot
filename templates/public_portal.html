@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loudoun County Zoning Assistant - Public Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .header-title {
+            color: #2d3748;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .mode-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f7fafc;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .mode-badge {
+            background: #9f7aea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .toggle-btn {
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn:hover {
+            background: #2d3748;
+        }
+
+        /* Main Container */
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .chat-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-title {
+            font-size: 32px;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text {
+            font-size: 18px;
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: #fef5e7;
+            border: 2px solid #f9e79f;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .disclaimer-icon {
+            color: #f39c12;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .disclaimer-text {
+            color: #7d6608;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Quick Examples */
+        .examples-section {
+            margin: 30px 0;
+        }
+
+        .examples-title {
+            font-size: 16px;
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .example-btn {
+            background: #edf2f7;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            font-size: 14px;
+            color: #2d3748;
+        }
+
+        .example-btn:hover {
+            background: #e2e8f0;
+            border-color: #cbd5e0;
+            transform: translateY(-2px);
+        }
+
+        /* Input Section */
+        .input-section {
+            margin-top: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .question-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .submit-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Response Section */
+        .response-section {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .response-section.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .response-title {
+            font-size: 20px;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .response-content {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            line-height: 1.8;
+            color: #2d3748;
+        }
+
+        .response-text {
+            margin-bottom: 15px;
+        }
+
+        .citation-list {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .citation-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        .citation-item {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #667eea;
+        }
+
+        /* Escalate Section */
+        .escalate-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: #edf2f7;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .escalate-text {
+            font-size: 14px;
+            color: #4a5568;
+            margin-bottom: 12px;
+        }
+
+        .escalate-btn {
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .escalate-btn:hover {
+            background: #2d3748;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #718096;
+            font-size: 16px;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .contact-info {
+            margin-top: 10px;
+        }
+
+        .contact-info a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">LC</div>
+            <div class="header-title">
+                <h1>Loudoun County Zoning Assistant</h1>
+                <div class="header-subtitle">Public Information Portal</div>
+            </div>
+        </div>
+        <div class="mode-toggle">
+            <span class="mode-badge">PUBLIC MODE</span>
+            <button class="toggle-btn" onclick="window.location.href='/staff'">
+                Switch to Staff Portal
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="chat-container">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <div class="welcome-icon">🏛️</div>
+                <h2 class="welcome-title">Welcome to the Zoning Assistant</h2>
+                <p class="welcome-text">
+                    Get quick answers about Loudoun County zoning regulations.
+                    Simply ask your question below!
+                </p>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="disclaimer">
+                <div class="disclaimer-icon">⚠️</div>
+                <div class="disclaimer-text">
+                    <strong>Important Notice:</strong> This information is for educational purposes only. 
+                    For official determinations, please contact the Planning Department at 
+                    <strong>(703) 777-0246</strong> or visit us in person at 1 Harrison Street SE, Leesburg, VA.
+                </div>
+            </div>
+
+            <!-- Quick Examples -->
+            <div class="examples-section">
+                <div class="examples-title">Common Questions - Click to Try:</div>
+                <div class="example-grid">
+                    <button class="example-btn" onclick="setQuestion('Can I build a shed in my backyard?')">
+                        🏠 Can I build a shed?
+                    </button>
+                    <button class="example-btn" onclick="setQuestion('What are the setback requirements for my property?')">
+                        📏 Setback requirements?
+                    </button>
+                    <button class="example-btn" onclick="setQuestion('Do I need a permit for a fence?')">
+                        🚧 Fence permit needed?
+                    </button>
+                    <button class="example-btn" onclick="setQuestion('What businesses can operate in AR-1 zoning?')">
+                        🏢 Home business rules?
+                    </button>
+                </div>
+            </div>
+
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="input-group">
+                    <input type="text" 
+                           id="questionInput" 
+                           class="question-input" 
+                           placeholder="Type your zoning question here..."
+                           onkeypress="if(event.key === 'Enter') submitQuestion()">
+                    <button class="submit-btn" onclick="submitQuestion()" id="submitBtn">
+                        Ask Question
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <div class="loading-text">Searching zoning ordinances...</div>
+            </div>
+
+            <!-- Response Section -->
+            <div class="response-section" id="responseSection">
+                <div class="response-header">
+                    <div class="response-title">Answer</div>
+                </div>
+                <div class="response-content">
+                    <div class="response-text" id="responseText"></div>
+                    <div class="citation-list" id="citationList"></div>
+                </div>
+
+                <!-- Escalate Section -->
+                <div class="escalate-section">
+                    <div class="escalate-text">
+                        Need more detailed information or an official determination?
+                    </div>
+                    <button class="escalate-btn" onclick="escalateToStaff()">
+                        📋 Submit to Planning Staff for Review
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div>Loudoun County Planning Department - Public Information Service</div>
+        <div class="contact-info">
+            Questions? Call <a href="tel:7037770246">(703) 777-0246</a> | 
+            Visit us at <a href="https://www.loudoun.gov/planning" target="_blank">loudoun.gov/planning</a>
+        </div>
+    </div>
+
+    <script>
+        // Generate unique session ID
+        const sessionId = 'public_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        let currentQuestion = '';
+
+        function setQuestion(question) {
+            document.getElementById('questionInput').value = question;
+            submitQuestion();
+        }
+
+        async function submitQuestion() {
+            const question = document.getElementById('questionInput').value.trim();
+            if (!question) return;
+
+            currentQuestion = question;
+            
+            // Show loading
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('responseSection').classList.remove('show');
+            document.getElementById('submitBtn').disabled = true;
+
+            try {
+                const response = await fetch('/ask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Session-Id': sessionId
+                    },
+                    body: JSON.stringify({
+                        question: question,
+                        county: 'loudoun',
+                        metadata: {
+                            sessionId: sessionId,
+                            timestamp: new Date().toISOString()
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                displayResponse(data);
+            } catch (error) {
+                alert('Sorry, there was an error processing your question. Please try again.');
+                console.error('Error:', error);
+            } finally {
+                document.getElementById('loading').classList.remove('show');
+                document.getElementById('submitBtn').disabled = false;
+            }
+        }
+
+        function displayResponse(data) {
+            // Display main answer
+            const responseText = document.getElementById('responseText');
+            responseText.innerHTML = data.answer.replace(/\n/g, '<br>');
+
+            // Display citations
+            const citationList = document.getElementById('citationList');
+            if (data.citations && data.citations.length > 0) {
+                citationList.innerHTML = '<div class="citation-title">Referenced Sections:</div>';
+                data.citations.forEach(citation => {
+                    citationList.innerHTML += `
+                        <div class="citation-item">
+                            📑 ${citation.section}
+                        </div>
+                    `;
+                });
+            } else {
+                citationList.innerHTML = '';
+            }
+
+            // Add disclaimer if present
+            if (data.disclaimer) {
+                responseText.innerHTML += `
+                    <div style="margin-top: 20px; padding: 15px; background: #fef5e7; border-radius: 8px; font-size: 14px; color: #7d6608;">
+                        <strong>Reminder:</strong> ${data.disclaimer}
+                    </div>
+                `;
+            }
+
+            // Show response section
+            document.getElementById('responseSection').classList.add('show');
+        }
+
+        async function escalateToStaff() {
+            if (!currentQuestion) return;
+
+            if (confirm('Would you like to submit this question for detailed staff review? You will receive a reference number for tracking.')) {
+                try {
+                    const response = await fetch('/escalate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            question: currentQuestion,
+                            context: {
+                                sessionId: sessionId,
+                                timestamp: new Date().toISOString()
+                            }
+                        })
+                    });
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        alert(`Your question has been submitted for staff review.\n\nReference Number: ${data.escalation_id}\n\nPlease save this number for your records. Staff will review your question within 1-2 business days.`);
+                    }
+                } catch (error) {
+                    alert('Sorry, there was an error submitting your question. Please call (703) 777-0246 for assistance.');
+                    console.error('Error:', error);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

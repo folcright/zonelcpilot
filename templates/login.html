@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Login - Loudoun County Planning Department</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3748 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+        }
+
+        .login-header {
+            background: #1a2332;
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .county-seal {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a2332;
+            font-weight: bold;
+            font-size: 32px;
+        }
+
+        .login-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: #cbd5e0;
+        }
+
+        .login-form {
+            padding: 40px;
+        }
+
+        .security-notice {
+            background: #fef5e7;
+            border: 1px solid #f9e79f;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 25px;
+            font-size: 13px;
+            color: #7d6608;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .security-icon {
+            color: #f39c12;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .error-message {
+            display: none;
+            background: #fee;
+            border: 1px solid #fcc;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 20px;
+            color: #c53030;
+            font-size: 14px;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-button:hover {
+            background: #1d4ed8;
+        }
+
+        .login-button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .login-footer {
+            padding: 20px;
+            background: #f7fafc;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .back-link {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #2563eb;
+        }
+
+        .demo-credentials {
+            background: #edf2f7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        .demo-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+
+        .credential-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .credential-item:last-child {
+            border-bottom: none;
+        }
+
+        .credential-copy {
+            color: #2563eb;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .credential-copy:hover {
+            text-decoration: underline;
+        }
+
+        .loading-spinner {
+            display: none;
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #2563eb;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        .loading-spinner.show {
+            display: block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Header -->
+        <div class="login-header">
+            <div class="county-seal">LC</div>
+            <h1 class="login-title">Loudoun County Planning Department</h1>
+            <p class="login-subtitle">Staff Portal Login</p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="login-form">
+            <div class="security-notice">
+                <span class="security-icon">🔒</span>
+                <div>
+                    <strong>Authorized Personnel Only</strong><br>
+                    This system is for official use by Loudoun County staff. All activities are logged and monitored.
+                </div>
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                Invalid staff ID or password. Please try again.
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="staffId">Staff ID</label>
+                    <input type="text" 
+                           id="staffId" 
+                           class="form-input" 
+                           placeholder="Enter your staff ID"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" 
+                           id="password" 
+                           class="form-input" 
+                           placeholder="Enter your password"
+                           required>
+                </div>
+
+                <button type="submit" class="login-button" id="loginButton">
+                    <span id="buttonText">Sign In</span>
+                    <div class="loading-spinner" id="loadingSpinner"></div>
+                </button>
+            </form>
+
+            <!-- Demo Credentials -->
+            <div class="demo-credentials">
+                <div class="demo-title">Demo Credentials (For Testing)</div>
+                <div class="credential-item">
+                    <span>Senior Planner</span>
+                    <span class="credential-copy" onclick="setCredentials('jsmith', 'planning2024')">
+                        jsmith / planning2024
+                    </span>
+                </div>
+                <div class="credential-item">
+                    <span>Zoning Admin</span>
+                    <span class="credential-copy" onclick="setCredentials('mjones', 'zoning2024')">
+                        mjones / zoning2024
+                    </span>
+                </div>
+                <div class="credential-item">
+                    <span>Planning Tech</span>
+                    <span class="credential-copy" onclick="setCredentials('rlopez', 'staff2024')">
+                        rlopez / staff2024
+                    </span>
+                </div>
+                <div class="credential-item">
+                    <span>Administrator</span>
+                    <span class="credential-copy" onclick="setCredentials('admin', 'admin2024')">
+                        admin / admin2024
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="login-footer">
+            <a href="/public" class="back-link">
+                ← Back to Public Portal
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function setCredentials(staffId, password) {
+            document.getElementById('staffId').value = staffId;
+            document.getElementById('password').value = password;
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const staffId = document.getElementById('staffId').value;
+            const password = document.getElementById('password').value;
+            
+            // Hide error message
+            document.getElementById('errorMessage').classList.remove('show');
+            
+            // Show loading
+            document.getElementById('loginButton').disabled = true;
+            document.getElementById('buttonText').style.display = 'none';
+            document.getElementById('loadingSpinner').classList.add('show');
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        staff_id: staffId,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Redirect to staff portal
+                    window.location.href = '/staff';
+                } else {
+                    // Show error message
+                    document.getElementById('errorMessage').classList.add('show');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                document.getElementById('errorMessage').textContent = 'An error occurred. Please try again.';
+                document.getElementById('errorMessage').classList.add('show');
+            } finally {
+                // Hide loading
+                document.getElementById('loginButton').disabled = false;
+                document.getElementById('buttonText').style.display = 'inline';
+                document.getElementById('loadingSpinner').classList.remove('show');
+            }
+        }
+
+        // Allow Enter key to submit form
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>
