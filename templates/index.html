@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zoning Code Assistant - Loudoun County</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .input-group {
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .answer-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+            border-left: 4px solid #3498db;
+        }
+        .answer-box.show {
+            display: block;
+        }
+        .loading {
+            display: none;
+            color: #3498db;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏛️ Loudoun County Zoning Assistant</h1>
+        <p>Get instant answers about zoning requirements with specific code citations.</p>
+
+        <div class="input-group">
+            <input type="text" id="question" placeholder="Can I build a shed 10 feet from my property line?">
+        </div>
+
+        <button onclick="askQuestion()">Get Answer</button>
+
+        <div class="loading">🔍 Searching zoning code...</div>
+
+        <div id="answerBox" class="answer-box">
+            <div id="answerText"></div>
+        </div>
+    </div>
+
+    <script>
+        async function askQuestion() {
+            const question = document.getElementById('question').value;
+            if (!question) return;
+
+            document.querySelector('.loading').style.display = 'block';
+            document.getElementById('answerBox').classList.remove('show');
+
+            try {
+                const response = await fetch('/ask', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        question: question,
+                        county: 'loudoun'
+                    })
+                });
+
+                const data = await response.json();
+                document.getElementById('answerText').innerHTML = 
+                    '<strong>Answer:</strong><br>' + 
+                    data.answer.replace(/\n/g, '<br>');
+                document.getElementById('answerBox').classList.add('show');
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                document.querySelector('.loading').style.display = 'none';
+            }
+        }
+
+        document.getElementById('question').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') askQuestion();
+        });
+    </script>
+</body>
+</html>

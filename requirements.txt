@@ -1,0 +1,13 @@
+flask
+chromadb
+openai
+PyPDF2
+tiktoken
+networkx
+python-dotenv
+chromadb
+flask
+networkx
+openai
+PyPDF2
+tiktoken
