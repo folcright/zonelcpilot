@@ -2,7 +2,13 @@
 
 ## Overview
 
-This is a professional B2G (Business-to-Government) tool designed specifically for Loudoun County planning staff. The application provides an AI-powered assistant for querying zoning ordinances with parcel awareness, audit logging, and professional government interfaces. The system uses vector embeddings to search through the 548 sections of the current Loudoun County Zoning Ordinance and leverages OpenAI's GPT models to provide contextual answers with proper citations and compliance tracking.
+This is a dual-mode zoning compliance system for Loudoun County:
+
+**PUBLIC MODE**: A self-service compliance checker with TurboTax-style guided experience that helps residents check BEFORE they build, plant, or change property use. Features plain English interface, color-coded answers (Green/Yellow/Red), and mobile-first design.
+
+**STAFF MODE**: A professional B2G tool for county planning staff with full citation chains, parcel awareness, audit logging, precedent search, and official determination exports. 
+
+Both modes share the same RAG backend using vector embeddings to search through 548 sections of the current Loudoun County Zoning Ordinance, powered by OpenAI's GPT models.
 
 ## User Preferences
 
