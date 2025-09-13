@@ -410,6 +410,40 @@ def export_response():
         'document': determination
     })
 
+@app.route('/api/analytics/event', methods=['POST'])
+def track_analytics_event():
+    """Track analytics events from the public portal"""
+    data = request.json
+    event_name = data.get('event')
+    event_data = data.get('data', {})
+    timestamp = data.get('timestamp', datetime.now().isoformat())
+    session_id = data.get('sessionId')
+    
+    # Store analytics event
+    analytics_event = {
+        'event': event_name,
+        'data': event_data,
+        'timestamp': timestamp,
+        'session_id': session_id,
+        'mode': 'public'
+    }
+    
+    # Add to public usage log for tracking
+    public_usage_log.append(analytics_event)
+    
+    # Track specific events for metrics
+    if event_name == 'wizard_started':
+        # Track wizard starts by category
+        pass
+    elif event_name == 'compliance_check':
+        # Track compliance checks
+        pass
+    elif event_name == 'abandoned':
+        # Track abandoned flows
+        pass
+    
+    return jsonify({'status': 'success', 'tracked': True})
+
 def search_precedents(query):
     """Search for precedent cases (mock implementation)"""
     # Mock precedent data
