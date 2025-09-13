@@ -8,6 +8,13 @@ This is a professional B2G (Business-to-Government) tool designed specifically f
 
 Preferred communication style: Simple, everyday language.
 
+## Staff Login Credentials (Demo)
+
+- **John Smith (Planning)**: jsmith / planning2024
+- **Mary Jones (Zoning)**: mjones / zoning2024
+- **Robert Lopez (Staff)**: rlopez / staff2024
+- **Admin**: admin / admin2024
+
 ## System Architecture
 
 ### Frontend Architecture
