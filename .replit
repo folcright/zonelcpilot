@@ -31,5 +31,9 @@ channel = "stable-25_05"
 packages = ["cargo", "libiconv", "rustc"]
 
 [[ports]]
-localPort = 44657
+localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 46847
+externalPort = 3000

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Log Viewer - Loudoun County Planning Department</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: #f0f2f5;
+            color: #1a2332;
+        }
+
+        .header {
+            background: #1a2332;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .county-seal {
+            width: 40px;
+            height: 40px;
+            background: #4a5568;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .security-badge {
+            background: #dc2626;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .filter-group {
+            flex: 1;
+        }
+
+        .filter-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .filter-input, .filter-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .filter-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .audit-table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f9fafb;
+            padding: 12px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 12px;
+            font-size: 14px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .session-id {
+            font-family: monospace;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .staff-badge {
+            display: inline-block;
+            background: #e5e7eb;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .category-badge.permitted_use { background: #10b981; }
+        .category-badge.setbacks { background: #3b82f6; }
+        .category-badge.special_exceptions { background: #f59e0b; }
+        .category-badge.overlays { background: #8b5cf6; }
+        .category-badge.historic_districts { background: #ec4899; }
+        .category-badge.other { background: #6b7280; }
+
+        .view-btn {
+            padding: 4px 12px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .view-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .page-info {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .page-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .page-btn {
+            padding: 6px 12px;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .page-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .page-btn.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .export-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .export-btn {
+            padding: 10px 20px;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .export-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .modal-body {
+            margin: 16px 0;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 12px;
+        }
+
+        .detail-label {
+            font-weight: 500;
+            color: #374151;
+            width: 120px;
+        }
+
+        .detail-value {
+            flex: 1;
+            color: #6b7280;
+        }
+
+        .response-box {
+            background: #f9fafb;
+            border-left: 4px solid #6b7280;
+            padding: 12px;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #4b5563;
+        }
+
+        .close-btn {
+            padding: 8px 16px;
+            background: #6b7280;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        .close-btn:hover {
+            background: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="county-seal">LC</div>
+            <div>
+                <div class="header-title">Audit Log Viewer</div>
+            </div>
+        </div>
+        <div class="security-badge">RESTRICTED ACCESS - AUTHORIZED PERSONNEL ONLY</div>
+    </div>
+
+    <div class="container">
+        <div class="filters">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label class="filter-label">Date Range</label>
+                    <input type="date" class="filter-input" id="dateFrom">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">&nbsp;</label>
+                    <input type="date" class="filter-input" id="dateTo">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Staff Member</label>
+                    <input type="text" class="filter-input" id="staffFilter" placeholder="Staff ID or Name">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Parcel ID</label>
+                    <input type="text" class="filter-input" id="parcelFilter" placeholder="XXX-XX-XXXX">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Category</label>
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="permitted_use">Permitted Use</option>
+                        <option value="setbacks">Setbacks</option>
+                        <option value="special_exceptions">Special Exceptions</option>
+                        <option value="overlays">Overlays</option>
+                        <option value="historic_districts">Historic Districts</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <button class="filter-btn" onclick="applyFilters()">Apply Filters</button>
+            </div>
+        </div>
+
+        <div class="audit-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Session ID</th>
+                        <th>Staff Member</th>
+                        <th>Parcel ID</th>
+                        <th>Category</th>
+                        <th>Query Summary</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="auditTableBody">
+                    <!-- Sample data -->
+                    <tr>
+                        <td>2025-09-13 14:32:15</td>
+                        <td class="session-id">1694537535-a3b2c1d4</td>
+                        <td><span class="staff-badge">John Smith</span></td>
+                        <td>123-45-6789</td>
+                        <td><span class="category-badge setbacks">Setbacks</span></td>
+                        <td>What are the setback requirements?</td>
+                        <td><button class="view-btn" onclick="viewDetails(1)">View</button></td>
+                    </tr>
+                    <tr>
+                        <td>2025-09-13 14:28:42</td>
+                        <td class="session-id">1694537322-b4c3d2e1</td>
+                        <td><span class="staff-badge">Jane Doe</span></td>
+                        <td>234-56-7890</td>
+                        <td><span class="category-badge permitted_use">Permitted Use</span></td>
+                        <td>What businesses are permitted?</td>
+                        <td><button class="view-btn" onclick="viewDetails(2)">View</button></td>
+                    </tr>
+                    <tr>
+                        <td>2025-09-13 14:15:33</td>
+                        <td class="session-id">1694536533-c5d4e3f2</td>
+                        <td><span class="staff-badge">Mike Johnson</span></td>
+                        <td>345-67-8901</td>
+                        <td><span class="category-badge special_exceptions">Special Exceptions</span></td>
+                        <td>Is this use allowed by Special Exception?</td>
+                        <td><button class="view-btn" onclick="viewDetails(3)">View</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="pagination">
+                <div class="page-info">Showing 1-10 of 247 entries</div>
+                <div class="page-buttons">
+                    <button class="page-btn">Previous</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">...</button>
+                    <button class="page-btn">25</button>
+                    <button class="page-btn">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="export-section">
+            <h3>Export Audit Logs</h3>
+            <p style="color: #6b7280; font-size: 14px; margin-top: 8px;">Export filtered audit logs for compliance reporting or analysis</p>
+            <div class="export-buttons">
+                <button class="export-btn" onclick="exportCSV()">
+                    📊 Export as CSV
+                </button>
+                <button class="export-btn" onclick="exportPDF()">
+                    📄 Export as PDF
+                </button>
+                <button class="export-btn" onclick="exportJSON()">
+                    💾 Export as JSON
+                </button>
+                <button class="export-btn" onclick="generateReport()">
+                    📈 Generate Compliance Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">Query Detail</div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be populated dynamically -->
+            </div>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Mock data for demonstration
+        const mockAuditData = {
+            1: {
+                timestamp: '2025-09-13 14:32:15',
+                sessionId: '1694537535-a3b2c1d4',
+                staffId: 'John Smith',
+                parcelId: '123-45-6789',
+                category: 'setbacks',
+                question: 'What are the setback requirements for this parcel?',
+                response: 'Based on the AR-1 zoning designation, the setback requirements are: Front: 50 feet, Side: 25 feet, Rear: 35 feet. Note: This parcel is subject to the Limestone Overlay District which may impose additional restrictions.',
+                citations: ['Section 5-600', 'Section 4-1500'],
+                caseReference: 'SUP-2024-042'
+            },
+            2: {
+                timestamp: '2025-09-13 14:28:42',
+                sessionId: '1694537322-b4c3d2e1',
+                staffId: 'Jane Doe',
+                parcelId: '234-56-7890',
+                category: 'permitted_use',
+                question: 'What businesses are permitted in TR-10 zoning?',
+                response: 'TR-10 zoning permits the following business uses: Professional offices, Medical/dental offices, Personal service establishments. Note: This parcel is within the Historic District, requiring additional design review.',
+                citations: ['Section 3-102', 'Section 8-300'],
+                caseReference: ''
+            }
+        };
+
+        function viewDetails(id) {
+            const data = mockAuditData[id];
+            if (!data) {
+                // Load from server in production
+                alert('Loading details from server...');
+                return;
+            }
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="detail-row">
+                    <div class="detail-label">Timestamp:</div>
+                    <div class="detail-value">${data.timestamp}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Session ID:</div>
+                    <div class="detail-value" style="font-family: monospace;">${data.sessionId}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Staff Member:</div>
+                    <div class="detail-value">${data.staffId}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Parcel ID:</div>
+                    <div class="detail-value">${data.parcelId}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Category:</div>
+                    <div class="detail-value">${data.category.replace('_', ' ').toUpperCase()}</div>
+                </div>
+                ${data.caseReference ? `
+                <div class="detail-row">
+                    <div class="detail-label">Case Reference:</div>
+                    <div class="detail-value">${data.caseReference}</div>
+                </div>` : ''}
+                <div class="detail-row">
+                    <div class="detail-label">Query:</div>
+                    <div class="detail-value">${data.question}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Citations:</div>
+                    <div class="detail-value">${data.citations.join(', ')}</div>
+                </div>
+                <h4 style="margin-top: 16px; margin-bottom: 8px;">Response Provided:</h4>
+                <div class="response-box">${data.response}</div>
+            `;
+
+            document.getElementById('detailModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.remove('show');
+        }
+
+        function applyFilters() {
+            alert('Filters will be applied to query the audit database');
+        }
+
+        function exportCSV() {
+            alert('Exporting audit logs as CSV file...');
+        }
+
+        function exportPDF() {
+            alert('Generating PDF report of audit logs...');
+        }
+
+        function exportJSON() {
+            alert('Exporting audit logs as JSON file...');
+        }
+
+        function generateReport() {
+            alert('Generating comprehensive compliance report...');
+        }
+
+        // Set today's date as default
+        document.getElementById('dateTo').valueAsDate = new Date();
+        const fromDate = new Date();
+        fromDate.setDate(fromDate.getDate() - 30);
+        document.getElementById('dateFrom').valueAsDate = fromDate;
+    </script>
+</body>
+</html>

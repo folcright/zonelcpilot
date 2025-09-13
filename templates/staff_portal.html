@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>County Planning Staff Assistant - Loudoun County</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: #f0f2f5;
+            color: #1a2332;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: #1a2332;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .county-seal {
+            width: 40px;
+            height: 40px;
+            background: #4a5568;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .header-subtitle {
+            font-size: 12px;
+            color: #cbd5e0;
+            margin-top: 2px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .staff-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .security-badge {
+            background: #dc2626;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: white;
+            border-bottom: 2px solid #e5e7eb;
+            padding: 0 20px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-tab {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: #6b7280;
+        }
+
+        .nav-tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+        }
+
+        .nav-tab:hover {
+            color: #2563eb;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        /* Left Panel */
+        .left-panel {
+            width: 400px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .panel-header {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a2332;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .parcel-info {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 8px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .parcel-info.show {
+            display: block;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .info-label {
+            color: #6b7280;
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: #1a2332;
+        }
+
+        /* Quick Templates */
+        .quick-templates {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .templates-header {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+        }
+
+        .template-btn {
+            display: block;
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            text-align: left;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .template-btn:hover {
+            background: #e5e7eb;
+            border-color: #9ca3af;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .submit-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* Right Panel */
+        .right-panel {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .response-header {
+            padding: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .response-content {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .loading-state {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-state.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #2563eb;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .response-section {
+            margin-bottom: 24px;
+        }
+
+        .response-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a2332;
+            margin-bottom: 12px;
+        }
+
+        .response-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #374151;
+        }
+
+        .ordinance-quote {
+            background: #f9fafb;
+            border-left: 4px solid #6b7280;
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-size: 13px;
+            color: #4b5563;
+            font-style: italic;
+        }
+
+        .citation {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-right: 4px;
+        }
+
+        .citation:hover {
+            background: #bfdbfe;
+        }
+
+        .additional-considerations {
+            background: #fef3c7;
+            border: 1px solid #fbbf24;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+
+        .considerations-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .disclaimer {
+            background: #fed7aa;
+            border: 1px solid #fb923c;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 20px 0;
+            font-size: 13px;
+            color: #7c2d12;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            padding: 20px 24px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 12px;
+            background: #f9fafb;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+
+        .action-btn.primary {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .action-btn.primary:hover {
+            background: #1d4ed8;
+        }
+
+        .action-btn.warning {
+            background: #f59e0b;
+            color: white;
+            border-color: #f59e0b;
+        }
+
+        .action-btn.warning:hover {
+            background: #d97706;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a2332;
+            color: #9ca3af;
+            padding: 12px 20px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .session-id {
+            font-family: monospace;
+            color: #cbd5e0;
+        }
+
+        /* Analytics Dashboard */
+        .analytics-panel {
+            display: none;
+            padding: 24px;
+        }
+
+        .analytics-panel.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        .top-sections {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .section-list {
+            list-style: none;
+            margin-top: 16px;
+        }
+
+        .section-item {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-name {
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .section-count {
+            background: #e5e7eb;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="county-seal">LC</div>
+            <div>
+                <div class="header-title">County Planning Staff Assistant</div>
+                <div class="header-subtitle">Loudoun County Planning & Zoning Department</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="staff-info">
+                <span>👤</span>
+                <span id="staffDisplay">Not Logged In</span>
+            </div>
+            <div class="security-badge">INTERNAL USE ONLY - NOT FOR PUBLIC DISTRIBUTION</div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+        <div class="nav-tab active" onclick="switchTab('query')">Query System</div>
+        <div class="nav-tab" onclick="switchTab('analytics')">Analytics Dashboard</div>
+        <div class="nav-tab" onclick="switchTab('audit')">Audit Log</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="queryPanel">
+        <!-- Left Panel - Query Information -->
+        <div class="left-panel">
+            <div class="panel-header">Query Information</div>
+            
+            <div class="form-group">
+                <label class="form-label">Staff Member ID/Name <span class="required">*</span></label>
+                <input type="text" id="staffId" class="form-input" placeholder="Enter your staff ID or name" onchange="updateStaffDisplay()">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Parcel ID <span class="required">*</span></label>
+                <input type="text" id="parcelId" class="form-input" placeholder="XXX-XX-XXXX" onchange="loadParcelInfo()">
+                <div id="parcelInfo" class="parcel-info">
+                    <div class="info-row">
+                        <span class="info-label">Base Zoning:</span>
+                        <span class="info-value" id="baseZoning">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Overlays:</span>
+                        <span class="info-value" id="overlays">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Special Districts:</span>
+                        <span class="info-value" id="specialDistricts">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Previous Permits:</span>
+                        <span class="info-value" id="previousPermits">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Property Address</label>
+                <input type="text" id="propertyAddress" class="form-input" placeholder="Auto-populated from parcel">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Query Category <span class="required">*</span></label>
+                <select id="queryCategory" class="form-select">
+                    <option value="">Select a category</option>
+                    <option value="permitted_use">Permitted Use</option>
+                    <option value="setbacks">Setbacks</option>
+                    <option value="special_exceptions">Special Exceptions</option>
+                    <option value="overlays">Overlays</option>
+                    <option value="historic_districts">Historic Districts</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Case Reference (Optional)</label>
+                <input type="text" id="caseReference" class="form-input" placeholder="e.g., SUP-2024-001">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Your Question <span class="required">*</span></label>
+                <textarea id="queryText" class="form-textarea" placeholder="Enter your zoning question..."></textarea>
+            </div>
+
+            <button class="submit-btn" onclick="submitQuery()">Submit Query</button>
+
+            <!-- Quick Templates -->
+            <div class="quick-templates">
+                <div class="templates-header">Quick Query Templates</div>
+                <button class="template-btn" onclick="useTemplate('Can I subdivide this parcel?')">Can I subdivide this parcel?</button>
+                <button class="template-btn" onclick="useTemplate('What businesses are permitted?')">What businesses are permitted?</button>
+                <button class="template-btn" onclick="useTemplate('What are the setback requirements?')">What are the setback requirements?</button>
+                <button class="template-btn" onclick="useTemplate('Is this use allowed by Special Exception?')">Is this use allowed by Special Exception?</button>
+                <button class="template-btn" onclick="useTemplate('What is the maximum building height?')">What's the maximum building height?</button>
+            </div>
+        </div>
+
+        <!-- Right Panel - Response & Documentation -->
+        <div class="right-panel">
+            <div class="response-header">
+                <div class="panel-header">Response & Documentation</div>
+            </div>
+            
+            <div class="response-content">
+                <div class="loading-state" id="loadingState">
+                    <div class="spinner"></div>
+                    <div>Searching zoning ordinance...</div>
+                </div>
+                
+                <div id="responseArea" style="display: none;">
+                    <div class="response-section">
+                        <div class="response-title">Answer</div>
+                        <div class="response-text" id="answerText"></div>
+                    </div>
+
+                    <div class="response-section" id="citationsSection" style="display: none;">
+                        <div class="response-title">Relevant Ordinance Sections</div>
+                        <div id="citationsList"></div>
+                    </div>
+
+                    <div class="additional-considerations" id="considerationsSection" style="display: none;">
+                        <div class="considerations-title">⚠️ Additional Considerations</div>
+                        <div id="considerationsText"></div>
+                    </div>
+
+                    <div class="disclaimer">
+                        <strong>⚠️ Important Notice:</strong> This response is generated based on the current zoning ordinance text. For official determinations, please consult with the Planning Director. Always verify information against the official ordinance documents and consider all applicable overlays, special exceptions, and recent amendments.
+                    </div>
+
+                    <div class="response-section" id="seeAlsoSection" style="display: none;">
+                        <div class="response-title">See Also</div>
+                        <div id="seeAlsoText"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons" id="actionButtons" style="display: none;">
+                <button class="action-btn primary" onclick="exportPDF()">
+                    📄 Export as PDF
+                </button>
+                <button class="action-btn" onclick="saveToCase()">
+                    📁 Save to Case File
+                </button>
+                <button class="action-btn" onclick="emailConstituent()">
+                    ✉️ Email to Constituent
+                </button>
+                <button class="action-btn warning" onclick="flagForReview()">
+                    🚩 Flag for Legal Review
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Panel -->
+    <div class="analytics-panel" id="analyticsPanel">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="queriesToday">47</div>
+                <div class="stat-label">Queries Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgTime">~12 min</div>
+                <div class="stat-label">Avg. Time Saved per Query</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalSaved">9.4 hrs</div>
+                <div class="stat-label">Total Time Saved Today</div>
+            </div>
+        </div>
+
+        <div class="top-sections">
+            <div class="panel-header">Most Queried Sections Today</div>
+            <ul class="section-list">
+                <li class="section-item">
+                    <span class="section-name">Section 5-600: Setback Requirements</span>
+                    <span class="section-count">12</span>
+                </li>
+                <li class="section-item">
+                    <span class="section-name">Section 3-102: Permitted Uses in AR-1</span>
+                    <span class="section-count">9</span>
+                </li>
+                <li class="section-item">
+                    <span class="section-name">Section 7-200: Special Exception Procedures</span>
+                    <span class="section-count">7</span>
+                </li>
+                <li class="section-item">
+                    <span class="section-name">Section 4-1500: Limestone Overlay District</span>
+                    <span class="section-count">6</span>
+                </li>
+                <li class="section-item">
+                    <span class="section-name">Section 5-900: Height Regulations</span>
+                    <span class="section-count">5</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div>© 2025 Loudoun County Government - Planning & Zoning Department</div>
+        <div>Session ID: <span class="session-id" id="sessionId"></span></div>
+    </div>
+
+    <script>
+        // Generate session ID on load
+        const sessionId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        document.getElementById('sessionId').textContent = sessionId;
+
+        // Mock parcel data
+        const parcelData = {
+            '123-45-6789': {
+                address: '42100 Raspberry Drive, Ashburn, VA 20148',
+                baseZoning: 'AR-1 (Agricultural Rural-1)',
+                overlays: 'Limestone Overlay District',
+                specialDistricts: 'None',
+                previousPermits: 'SUP-2023-001: Home Business approved'
+            },
+            '234-56-7890': {
+                address: '123 Main Street, Leesburg, VA 20176',
+                baseZoning: 'TR-10 (Transitional Residential-10)',
+                overlays: 'None',
+                specialDistricts: 'Historic District',
+                previousPermits: 'None'
+            },
+            '345-67-8901': {
+                address: '5000 Commerce Center Dr, Dulles, VA 20166',
+                baseZoning: 'PD-CC (Planned Development-Commercial Center)',
+                overlays: 'None',
+                specialDistricts: 'None',
+                previousPermits: 'SP-2022-005: Sign variance approved'
+            }
+        };
+
+        let queryCount = 47;
+
+        function updateStaffDisplay() {
+            const staffId = document.getElementById('staffId').value;
+            if (staffId) {
+                document.getElementById('staffDisplay').textContent = staffId;
+            }
+        }
+
+        function loadParcelInfo() {
+            const parcelId = document.getElementById('parcelId').value;
+            const parcelInfo = document.getElementById('parcelInfo');
+            
+            if (parcelData[parcelId]) {
+                const data = parcelData[parcelId];
+                document.getElementById('propertyAddress').value = data.address;
+                document.getElementById('baseZoning').textContent = data.baseZoning;
+                document.getElementById('overlays').textContent = data.overlays;
+                document.getElementById('specialDistricts').textContent = data.specialDistricts;
+                document.getElementById('previousPermits').textContent = data.previousPermits;
+                parcelInfo.classList.add('show');
+            } else if (parcelId) {
+                document.getElementById('propertyAddress').value = 'Address not found';
+                document.getElementById('baseZoning').textContent = 'Unknown';
+                document.getElementById('overlays').textContent = 'Unknown';
+                document.getElementById('specialDistricts').textContent = 'Unknown';
+                document.getElementById('previousPermits').textContent = 'Unknown';
+                parcelInfo.classList.add('show');
+            } else {
+                parcelInfo.classList.remove('show');
+                document.getElementById('propertyAddress').value = '';
+            }
+        }
+
+        function useTemplate(template) {
+            document.getElementById('queryText').value = template;
+        }
+
+        function switchTab(tab) {
+            // Update active tab
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show/hide panels
+            if (tab === 'query') {
+                document.getElementById('queryPanel').style.display = 'flex';
+                document.getElementById('analyticsPanel').style.display = 'none';
+            } else if (tab === 'analytics') {
+                document.getElementById('queryPanel').style.display = 'none';
+                document.getElementById('analyticsPanel').style.display = 'block';
+            } else if (tab === 'audit') {
+                alert('Audit log view coming soon. All queries are being logged with timestamp, staff ID, parcel ID, and responses.');
+            }
+        }
+
+        async function submitQuery() {
+            // Validate required fields
+            const staffId = document.getElementById('staffId').value;
+            const parcelId = document.getElementById('parcelId').value;
+            const queryCategory = document.getElementById('queryCategory').value;
+            const queryText = document.getElementById('queryText').value;
+
+            if (!staffId || !parcelId || !queryCategory || !queryText) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Show loading state
+            document.getElementById('loadingState').classList.add('active');
+            document.getElementById('responseArea').style.display = 'none';
+            document.getElementById('actionButtons').style.display = 'none';
+
+            try {
+                // Build context-aware query
+                const parcelInfo = parcelData[parcelId];
+                let contextualQuery = queryText;
+                if (parcelInfo) {
+                    contextualQuery = `${queryText} [Context: Parcel ${parcelId} is zoned ${parcelInfo.baseZoning.split(' ')[0]}`;
+                    if (parcelInfo.overlays !== 'None') {
+                        contextualQuery += ` with ${parcelInfo.overlays}`;
+                    }
+                    if (parcelInfo.specialDistricts !== 'None') {
+                        contextualQuery += ` in ${parcelInfo.specialDistricts}`;
+                    }
+                    contextualQuery += ']';
+                }
+
+                const response = await fetch('/ask', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        question: contextualQuery,
+                        county: 'loudoun',
+                        metadata: {
+                            staffId: staffId,
+                            parcelId: parcelId,
+                            category: queryCategory,
+                            caseReference: document.getElementById('caseReference').value,
+                            sessionId: sessionId,
+                            timestamp: new Date().toISOString()
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                
+                // Display response
+                document.getElementById('answerText').innerHTML = data.answer.replace(/\n/g, '<br>');
+
+                // Display citations
+                if (data.citations && data.citations.length > 0) {
+                    const citationsList = document.getElementById('citationsList');
+                    citationsList.innerHTML = data.citations.map(c => 
+                        `<div class="ordinance-quote">
+                            <span class="citation">${c.section}</span>
+                            <span style="margin-left: 10px;">Relevance: ${Math.round(c.relevance * 100)}%</span>
+                        </div>`
+                    ).join('');
+                    document.getElementById('citationsSection').style.display = 'block';
+                }
+
+                // Check for overlay considerations
+                if (parcelInfo && parcelInfo.overlays !== 'None') {
+                    document.getElementById('considerationsText').textContent = 
+                        `This parcel is subject to ${parcelInfo.overlays}. Additional restrictions may apply. Please review the overlay district regulations.`;
+                    document.getElementById('considerationsSection').style.display = 'block';
+                }
+
+                // Add see also section
+                document.getElementById('seeAlsoText').innerHTML = 
+                    'Related sections: Section 5-100 (General Provisions), Section 7-000 (Administration and Procedures)';
+                document.getElementById('seeAlsoSection').style.display = 'block';
+
+                document.getElementById('responseArea').style.display = 'block';
+                document.getElementById('actionButtons').style.display = 'flex';
+
+                // Update analytics
+                queryCount++;
+                document.getElementById('queriesToday').textContent = queryCount;
+                const timeSaved = queryCount * 12;
+                document.getElementById('totalSaved').textContent = `${Math.floor(timeSaved / 60)}.${Math.round((timeSaved % 60) / 60 * 10)} hrs`;
+
+            } catch (error) {
+                alert('Error processing query: ' + error.message);
+            } finally {
+                document.getElementById('loadingState').classList.remove('active');
+            }
+        }
+
+        // Action button handlers
+        function exportPDF() {
+            alert('PDF export functionality will generate a formal report including:\n\n' +
+                  '• Query details and parcel information\n' +
+                  '• Complete response with citations\n' +
+                  '• Staff member ID and timestamp\n' +
+                  '• Session ID: ' + sessionId + '\n\n' +
+                  'This feature is under development.');
+        }
+
+        function saveToCase() {
+            const caseRef = document.getElementById('caseReference').value || 'NEW-CASE';
+            alert(`Saving to case file: ${caseRef}\n\nThis will be integrated with the County case management system.`);
+        }
+
+        function emailConstituent() {
+            alert('Email template will be generated with the response.\n\nIntegration with County email system pending.');
+        }
+
+        function flagForReview() {
+            if (confirm('Flag this response for legal review?\n\nThis will notify the legal department for review.')) {
+                alert(`Response flagged for legal review.\nSession ID: ${sessionId}\nLegal team will be notified.`);
+            }
+        }
+    </script>
+</body>
+</html>

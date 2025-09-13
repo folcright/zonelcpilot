@@ -1,0 +1,89 @@
+Transform my current Loudoun County zoning chat prototype into a County Planning Staff Assistant tool. This is a B2G product for government employees, NOT for public use.
+
+## Current State
+- Simple chat interface querying 600-page zoning PDF
+- No user authentication or parcel awareness
+- Basic Q&A responses
+
+## Required Transformation
+
+### 1. UI Layout Changes
+Create a two-column professional interface:
+
+LEFT PANEL - "Query Information":
+- Parcel ID input field (required - format: XXX-XX-XXXX)
+- Property address field (auto-populate from parcel if possible)
+- Query category dropdown: [Permitted Use, Setbacks, Special Exceptions, Overlays, Historic Districts, Other]
+- Case reference field (optional - for precedent lookups)
+- Staff member name/ID field
+
+RIGHT PANEL - "Response & Documentation":
+- AI response area with:
+  - Clear section citations (clickable to source)
+  - Relevant ordinance quotes in gray boxes
+  - "Additional Considerations" section for overlays/special districts
+  - Orange disclaimer box: "For official determinations, consult Planning Director"
+- Action buttons below response:
+  - "Export as PDF" (includes query, response, timestamp, staff ID)
+  - "Save to Case File"
+  - "Email to Constituent"
+  - "Flag for Legal Review"
+
+### 2. Backend Functionality
+
+PARCEL CONTEXT (mock for demo):
+- When parcel ID entered, display mock data:
+  - Base zoning: (e.g., "AR-1")
+  - Overlays: (e.g., "Limestone Overlay District")
+  - Special Districts: (e.g., "None")
+  - Previous permits: (e.g., "SUP-2023-001: Home Business approved")
+
+RESPONSE ENHANCEMENT:
+- Every response must include:
+  1. Direct answer
+  2. Specific ordinance sections referenced
+  3. Any modifying overlays or exceptions
+  4. "See also:" related sections
+
+AUDIT SYSTEM:
+- Log every query with:
+  - Timestamp
+  - Staff ID
+  - Parcel ID
+  - Query text
+  - Response provided
+- Display "Session ID: [timestamp-based ID]" at bottom
+
+### 3. Common Query Templates
+
+Add quick-access buttons for top 5 queries:
+- "Can I subdivide this parcel?"
+- "What businesses are permitted?"
+- "What are the setback requirements?"
+- "Is this use allowed by Special Exception?"
+- "What's the maximum building height?"
+
+When clicked, pre-populate the chat with the template question.
+
+### 4. Demo Data
+
+Create 3 sample parcels with different characteristics:
+- Parcel 123-45-6789: AR-1 zoning, Limestone Overlay
+- Parcel 234-56-7890: TR-10 zoning, Historic District
+- Parcel 345-67-8901: PD-CC zoning, no overlays
+
+### 5. Professional Styling
+- County seal/logo placeholder at top
+- Government-appropriate colors (navy, gray, white)
+- Clear typography (no chat bubbles - use structured sections)
+- "INTERNAL USE ONLY - NOT FOR PUBLIC DISTRIBUTION" header
+
+### 6. Analytics Dashboard (Simple Mock)
+Add "Stats" tab showing:
+- Queries today: [counter]
+- Most asked about sections: [list]
+- Average response time saved: "~12 minutes per query"
+
+The goal is to demonstrate how this tool makes county staff more efficient and legally compliant, NOT to be a public-facing chatbot. Every feature should scream "professional government tool."
+
+Keep the existing RAG/chat functionality but wrap it in this government-focused UI/UX.
