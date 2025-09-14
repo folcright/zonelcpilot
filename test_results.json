@@ -1,0 +1,535 @@
+{
+  "timestamp": "2025-09-14 16:57:01",
+  "total_tests": 20,
+  "passed": 8,
+  "failed": 12,
+  "results": [
+    {
+      "id": 1,
+      "question": "Can I build a shed in AR-1?",
+      "category": "permit",
+      "answer": "**Setback Requirements:**\n            \n**Distance Required:** 25 feet\n**Measured From:** side and rear property lines\n**Applicable Zone:** AR-1\n**Structure Type:** shed/accessory structure\n\n**Referenc...",
+      "full_answer": "**Setback Requirements:**\n            \n**Distance Required:** 25 feet\n**Measured From:** side and rear property lines\n**Applicable Zone:** AR-1\n**Structure Type:** shed/accessory structure\n\n**Reference:** Section 5-603",
+      "citations": [
+        {
+          "section": "Section 5-603"
+        }
+      ],
+      "cached": true,
+      "response_time": 3.4332275390625e-05,
+      "quality": {
+        "score": 0.25,
+        "found_keywords": [
+          "accessory structure"
+        ],
+        "missing_keywords": [
+          "yes",
+          "allowed",
+          "permitted"
+        ],
+        "unwanted_found": [],
+        "passed": false
+      },
+      "passed": false
+    },
+    {
+      "id": 2,
+      "question": "What's the setback for a barn?",
+      "category": "setback",
+      "answer": "**Setback Requirements:**\n            \n**Distance Required:** 50 feet\n**Measured From:** all property lines\n**Applicable Zone:** AR-1\n**Structure Type:** barn/agricultural structure\n\n**Reference:** Se...",
+      "full_answer": "**Setback Requirements:**\n            \n**Distance Required:** 50 feet\n**Measured From:** all property lines\n**Applicable Zone:** AR-1\n**Structure Type:** barn/agricultural structure\n\n**Reference:** Section 5-603",
+      "citations": [
+        {
+          "section": "Section 5-603"
+        }
+      ],
+      "cached": true,
+      "response_time": 2.86102294921875e-05,
+      "quality": {
+        "score": 1.0,
+        "found_keywords": [
+          "50 feet",
+          "property line",
+          "agricultural structure"
+        ],
+        "missing_keywords": [],
+        "unwanted_found": [],
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": 3,
+      "question": "Do I need a permit for chickens?",
+      "category": "permit",
+      "answer": "**Permit Requirements:**\n\n**Permit Required:** No\n**Permit Type:** Not required\n\nMinimum 2 acre lot required in AR-1\n\n**Reference:** Section 5-102",
+      "full_answer": "**Permit Requirements:**\n\n**Permit Required:** No\n**Permit Type:** Not required\n\nMinimum 2 acre lot required in AR-1\n\n**Reference:** Section 5-102",
+      "citations": [
+        {
+          "section": "Section 5-102"
+        }
+      ],
+      "cached": true,
+      "response_time": 4.601478576660156e-05,
+      "quality": {
+        "score": 0.0,
+        "found_keywords": [],
+        "missing_keywords": [
+          "2 acres",
+          "no permit",
+          "agricultural"
+        ],
+        "unwanted_found": [],
+        "passed": false
+      },
+      "passed": false
+    },
+    {
+      "id": 4,
+      "question": "How far from property line for accessory structure?",
+      "category": "setback",
+      "answer": "I don't have any zoning information for loudoun county yet. Please run the ingest.py script first to load the zoning ordinance.",
+      "full_answer": "I don't have any zoning information for loudoun county yet. Please run the ingest.py script first to load the zoning ordinance.",
+      "citations": [],
+      "cached": false,
+      "response_time": 0.8596596717834473,
+      "quality": {
+        "score": 0.0,
+        "found_keywords": [],
+        "missing_keywords": [
+          "25 feet",
+          "side",
+          "rear",
+          "property line"
+        ],
+        "unwanted_found": [],
+        "passed": false
+      },
+      "passed": false
+    },
+    {
+      "id": 5,
+      "question": "Are horses allowed on 2 acres?",
+      "category": "livestock",
+      "answer": "I don't have any zoning information for loudoun county yet. Please run the ingest.py script first to load the zoning ordinance.",
+      "full_answer": "I don't have any zoning information for loudoun county yet. Please run the ingest.py script first to load the zoning ordinance.",
+      "citations": [],
+      "cached": false,
+      "response_time": 2.113609552383423,
+      "quality": {
+        "score": 0.0,
+        "found_keywords": [],
+        "missing_keywords": [
+          "yes",
+          "allowed",
+          "1 horse per acre",
+          "2 horses"
+        ],
+        "unwanted_found": [],
+        "passed": false
+      },
+      "passed": false
+    },
+    {
+      "id": 6,
+      "question": "Can I have chickens on 1 acre?",
+      "category": "livestock",
+      "answer": "**Livestock/Animal Regulations:**\n\n**Animal Type:** Chickens/Poultry\n**Allowed:** No (lot too small)\n**Zone:** AR-1\n**Minimum Lot Size:** 2 acres\n**Maximum Number:** Not specified\n\n\n\n**Reference:** Se...",
+      "full_answer": "**Livestock/Animal Regulations:**\n\n**Animal Type:** Chickens/Poultry\n**Allowed:** No (lot too small)\n**Zone:** AR-1\n**Minimum Lot Size:** 2 acres\n**Maximum Number:** Not specified\n\n\n\n**Reference:** Section 5-102",
+      "citations": [
+        {
+          "section": "Section 5-102"
+        }
+      ],
+      "cached": true,
+      "response_time": 9.131431579589844e-05,
+      "quality": {
+        "score": 0.375,
+        "found_keywords": [
+          "no",
+          "2 acres",
+          "minimum"
+        ],
+        "missing_keywords": [
+          "required"
+        ],
+        "unwanted_found": [
+          "allowed"
+        ],
+        "passed": false
+      },
+      "passed": false
+    },
+    {
+      "id": 7,
+      "question": "Do I need a permit for a shed?",
+      "category": "permit",
+      "answer": "**Permit Requirements:**\n\n**Permit Required:** Yes (if over 200 sq ft)\n**Permit Type:** Zoning Permit\n\n**Reference:** Section 6-101",
+      "full_answer": "**Permit Requirements:**\n\n**Permit Required:** Yes (if over 200 sq ft)\n**Permit Type:** Zoning Permit\n\n**Reference:** Section 6-101",
+      "citations": [
+        {
+          "section": "Section 6-101"
+        }
+      ],
+      "cached": true,
+      "response_time": 6.628036499023438e-05,
+      "quality": {
+        "score": 0.6666666666666666,
+        "found_keywords": [
+          "permit",
+          "required"
+        ],
+        "missing_keywords": [
+          "200 square feet"
+        ],
+        "unwanted_found": [],
+        "passed": false
+      },
+      "passed": false
+    },
+    {
+      "id": 8,
+      "question": "How many chickens can I have?",
+      "category": "livestock",
+      "answer": "**Livestock/Animal Regulations:**\n\n**Animal Type:** Chickens/Poultry\n**Allowed:** Yes (with 2+ acres)\n**Zone:** AR-1\n**Minimum Lot Size:** 2 acres\n**Maximum Number:** No limit for personal use\n\nMust b...",
+      "full_answer": "**Livestock/Animal Regulations:**\n\n**Animal Type:** Chickens/Poultry\n**Allowed:** Yes (with 2+ acres)\n**Zone:** AR-1\n**Minimum Lot Size:** 2 acres\n**Maximum Number:** No limit for personal use\n\nMust be for personal/agricultural use, not commercial\n\n**Reference:** Section 5-102",
+      "citations": [
+        {
+          "section": "Section 5-102"
+        }
+      ],
+      "cached": true,
+      "response_time": 3.075599670410156e-05,
+      "quality": {
+        "score": 1.0,
+        "found_keywords": [
+          "2 acres",
+          "personal use",
+          "agricultural"
+        ],
+        "missing_keywords": [],
+        "unwanted_found": [],
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": 9,
+      "question": "What's the minimum lot size in AR-1?",
+      "category": "zoning",
+      "answer": "AR-1 permits single-family dwellings, agricultural uses, and accessory structures like sheds, barns, and garages.",
+      "full_answer": "AR-1 permits single-family dwellings, agricultural uses, and accessory structures like sheds, barns, and garages.",
+      "citations": [
+        {
+          "section": "Section 3-102"
+        }
+      ],
+      "cached": true,
+      "response_time": 7.724761962890625e-05,
+      "quality": {
+        "score": 0.0,
+        "found_keywords": [],
+        "missing_keywords": [
+          "3 acres",
+          "minimum",
+          "lot size"
+        ],
+        "unwanted_found": [],
+        "passed": false
+      },
+      "passed": false
+    },
+    {
+      "id": 10,
+      "question": "Can I run a business from home?",
+      "category": "use",
+      "answer": "I don't have any zoning information for loudoun county yet. Please run the ingest.py script first to load the zoning ordinance.",
+      "full_answer": "I don't have any zoning information for loudoun county yet. Please run the ingest.py script first to load the zoning ordinance.",
+      "citations": [],
+      "cached": false,
+      "response_time": 0.42305493354797363,
+      "quality": {
+        "score": 0.0,
+        "found_keywords": [],
+        "missing_keywords": [
+          "special exception",
+          "home business",
+          "permit"
+        ],
+        "unwanted_found": [],
+        "passed": false
+      },
+      "passed": false
+    },
+    {
+      "id": 11,
+      "question": "Shed setback requirements",
+      "category": "setback",
+      "answer": "**Setback Requirements:**\n            \n**Distance Required:** 25 feet\n**Measured From:** side and rear property lines\n**Applicable Zone:** AR-1\n**Structure Type:** shed\n\n**Reference:** Section 5-603",
+      "full_answer": "**Setback Requirements:**\n            \n**Distance Required:** 25 feet\n**Measured From:** side and rear property lines\n**Applicable Zone:** AR-1\n**Structure Type:** shed\n\n**Reference:** Section 5-603",
+      "citations": [
+        {
+          "section": "Section 5-603"
+        }
+      ],
+      "cached": true,
+      "response_time": 1.9311904907226562e-05,
+      "quality": {
+        "score": 0.6666666666666666,
+        "found_keywords": [
+          "25 feet",
+          "property line"
+        ],
+        "missing_keywords": [
+          "accessory structure"
+        ],
+        "unwanted_found": [],
+        "passed": false
+      },
+      "passed": false
+    },
+    {
+      "id": 12,
+      "question": "Garage setback",
+      "category": "setback",
+      "answer": "**Setback Requirements:**\n            \n**Distance Required:** 25 feet\n**Measured From:** side and rear property lines\n**Applicable Zone:** AR-1\n**Structure Type:** detached garage\n\n**Reference:** Sect...",
+      "full_answer": "**Setback Requirements:**\n            \n**Distance Required:** 25 feet\n**Measured From:** side and rear property lines\n**Applicable Zone:** AR-1\n**Structure Type:** detached garage\n\n**Reference:** Section 5-603",
+      "citations": [
+        {
+          "section": "Section 5-603"
+        }
+      ],
+      "cached": true,
+      "response_time": 1.239776611328125e-05,
+      "quality": {
+        "score": 1.0,
+        "found_keywords": [
+          "25 feet",
+          "property line",
+          "detached"
+        ],
+        "missing_keywords": [],
+        "unwanted_found": [],
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": 13,
+      "question": "Maximum shed size without permit",
+      "category": "permit",
+      "answer": "Sheds 200 square feet or smaller do not require a permit in AR-1 zones.",
+      "full_answer": "Sheds 200 square feet or smaller do not require a permit in AR-1 zones.",
+      "citations": [
+        {
+          "section": "Section 6-101"
+        }
+      ],
+      "cached": true,
+      "response_time": 2.6226043701171875e-05,
+      "quality": {
+        "score": 0.3333333333333333,
+        "found_keywords": [
+          "200 square feet"
+        ],
+        "missing_keywords": [
+          "exempt",
+          "no permit"
+        ],
+        "unwanted_found": [],
+        "passed": false
+      },
+      "passed": false
+    },
+    {
+      "id": 14,
+      "question": "Can I build a pool?",
+      "category": "permit",
+      "answer": "**Permit Requirements:**\n\n**Permit Required:** Yes\n**Permit Type:** Building Permit and Zoning Permit\n\n10 ft setback, fencing required\n\n**Reference:** Section 5-1000",
+      "full_answer": "**Permit Requirements:**\n\n**Permit Required:** Yes\n**Permit Type:** Building Permit and Zoning Permit\n\n10 ft setback, fencing required\n\n**Reference:** Section 5-1000",
+      "citations": [
+        {
+          "section": "Section 5-1000"
+        }
+      ],
+      "cached": true,
+      "response_time": 0.00011968612670898438,
+      "quality": {
+        "score": 0.75,
+        "found_keywords": [
+          "yes",
+          "permit",
+          "setback"
+        ],
+        "missing_keywords": [
+          "10 feet"
+        ],
+        "unwanted_found": [],
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": 15,
+      "question": "Fence height limit",
+      "category": "structure",
+      "answer": "Fences can be up to 6 feet in rear and side yards, 4 feet in front yards without a permit.",
+      "full_answer": "Fences can be up to 6 feet in rear and side yards, 4 feet in front yards without a permit.",
+      "citations": [
+        {
+          "section": "Section 5-900"
+        }
+      ],
+      "cached": true,
+      "response_time": 1.8358230590820312e-05,
+      "quality": {
+        "score": 1.0,
+        "found_keywords": [
+          "6 feet",
+          "rear",
+          "4 feet",
+          "front"
+        ],
+        "missing_keywords": [],
+        "unwanted_found": [],
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": 16,
+      "question": "Permit for fence",
+      "category": "permit",
+      "answer": "**Permit Requirements:**\n\n**Permit Required:** Depends on location and height\n**Permit Type:** Zoning Permit (if required)\n\nMax 6 ft in rear/side, max 4 ft in front without permit\n\n**Reference:** Sect...",
+      "full_answer": "**Permit Requirements:**\n\n**Permit Required:** Depends on location and height\n**Permit Type:** Zoning Permit (if required)\n\nMax 6 ft in rear/side, max 4 ft in front without permit\n\n**Reference:** Section 5-900",
+      "citations": [
+        {
+          "section": "Section 5-900"
+        }
+      ],
+      "cached": true,
+      "response_time": 1.5735626220703125e-05,
+      "quality": {
+        "score": 0.5,
+        "found_keywords": [
+          "height",
+          "permit"
+        ],
+        "missing_keywords": [
+          "6 feet",
+          "4 feet"
+        ],
+        "unwanted_found": [],
+        "passed": false
+      },
+      "passed": false
+    },
+    {
+      "id": 17,
+      "question": "What can I build in AR-1?",
+      "category": "use",
+      "answer": "AR-1 permits single-family dwellings, agricultural uses, and accessory structures like sheds, barns, and garages.",
+      "full_answer": "AR-1 permits single-family dwellings, agricultural uses, and accessory structures like sheds, barns, and garages.",
+      "citations": [
+        {
+          "section": "Section 3-102"
+        }
+      ],
+      "cached": true,
+      "response_time": 9.012222290039062e-05,
+      "quality": {
+        "score": 1.0,
+        "found_keywords": [
+          "single-family",
+          "agricultural",
+          "accessory"
+        ],
+        "missing_keywords": [],
+        "unwanted_found": [],
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": 18,
+      "question": "Accessory structure height",
+      "category": "structure",
+      "answer": "Accessory structures in AR-1 can be up to 25 feet in height.",
+      "full_answer": "Accessory structures in AR-1 can be up to 25 feet in height.",
+      "citations": [
+        {
+          "section": "Section 5-604"
+        }
+      ],
+      "cached": true,
+      "response_time": 8.58306884765625e-06,
+      "quality": {
+        "score": 0.6666666666666666,
+        "found_keywords": [
+          "25 feet",
+          "height"
+        ],
+        "missing_keywords": [
+          "maximum"
+        ],
+        "unwanted_found": [],
+        "passed": false
+      },
+      "passed": false
+    },
+    {
+      "id": 19,
+      "question": "Driveway permit",
+      "category": "permit",
+      "answer": "**Permit Requirements:**\n\n**Permit Required:** Yes\n**Permit Type:** VDOT Land Use Permit\n\n**Reference:** Section 7-400",
+      "full_answer": "**Permit Requirements:**\n\n**Permit Required:** Yes\n**Permit Type:** VDOT Land Use Permit\n\n**Reference:** Section 7-400",
+      "citations": [
+        {
+          "section": "Section 7-400"
+        }
+      ],
+      "cached": true,
+      "response_time": 1.1444091796875e-05,
+      "quality": {
+        "score": 1.0,
+        "found_keywords": [
+          "permit",
+          "VDOT",
+          "required"
+        ],
+        "missing_keywords": [],
+        "unwanted_found": [],
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "id": 20,
+      "question": "Beekeeping allowed",
+      "category": "livestock",
+      "answer": "**Livestock/Animal Regulations:**\n\n**Animal Type:** Bees/Beekeeping\n**Allowed:** Yes\n**Zone:** AR-1\n**Minimum Lot Size:** 2 acres\n**Maximum Number:** Not specified\n\nHives must be 50 ft from property l...",
+      "full_answer": "**Livestock/Animal Regulations:**\n\n**Animal Type:** Bees/Beekeeping\n**Allowed:** Yes\n**Zone:** AR-1\n**Minimum Lot Size:** 2 acres\n**Maximum Number:** Not specified\n\nHives must be 50 ft from property lines\n\n**Reference:** Section 5-102",
+      "citations": [
+        {
+          "section": "Section 5-102"
+        }
+      ],
+      "cached": true,
+      "response_time": 1.049041748046875e-05,
+      "quality": {
+        "score": 0.75,
+        "found_keywords": [
+          "yes",
+          "allowed",
+          "2 acres"
+        ],
+        "missing_keywords": [
+          "50 feet"
+        ],
+        "unwanted_found": [],
+        "passed": true
+      },
+      "passed": true
+    }
+  ]
+}
